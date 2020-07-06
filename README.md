@@ -1,4 +1,4 @@
-# cd-cover-image-search
+# dvd-cover-image-search
 
 Homography estimation with RANSAC to match DVD cover image to a test image.
 
