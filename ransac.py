@@ -97,7 +97,7 @@ def drawMatches(img1, kp1, img2, kp2, matches, mask):
 
 if __name__ == "__main__":
 	# From OpenCV Docs
-	sift = cv2.SIFT()
+	sift = cv2.xfeatures2d.SIFT_create()
 
 	test = cv2.imread('test/image_01.jpeg')
 	test = cv2.cvtColor(test,cv2.COLOR_BGR2GRAY)

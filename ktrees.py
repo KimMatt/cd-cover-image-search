@@ -108,7 +108,7 @@ def make_tree(k):
 	descript_dict = dict()
 	allDescript_dict = dict()
 
-	sift = cv2.SIFT()
+	sift = cv2.xfeatures2d.SIFT_create()
 
 	print("Getting descriptors of each image...")
 	# Get SIFT descriptors for each image
@@ -144,7 +144,7 @@ def searchTree(name, tree):
 	descript_dict = tree.descript_dict
 	allDescript_dict = tree.allDescript_dict
 
-	sift = cv2.SIFT()
+	sift = cv2.xfeatures2d.SIFT_create()
 
 	print("Constructing key dict...")
 	# Get SIFT descriptors for each image
@@ -288,7 +288,7 @@ if __name__ == "__main__":
 	# usage: python ./ktrees [k] [name]
 
 	if (not (len(sys.argv) == 3)):
-		print("Usage: python ./dvdcovers [name] [k (optional)]")
+		print("Usage: python ./dvdcovers [name] [k]")
 		sys.exit(1)
 	if (int(sys.argv[2]) < 2):
 		print("k must be greater than 1")
