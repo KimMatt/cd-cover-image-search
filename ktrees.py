@@ -20,8 +20,8 @@ def drawMatches(img1, kp1, img2, kp2, matches, mask):
     Modified function from:
     http://stackoverflow.com/questions/20259025/module-object-has-no-attribute-drawmatches-opencv-python
 
-    This function takes in two images with their associated 
-    keypoints, as well as a list of DMatch data structure (matches) 
+    This function takes in two images with their associated
+    keypoints, as well as a list of DMatch data structure (matches)
     that contains which keypoints matched in which images.
 
     An image will be produced where a montage is shown with
@@ -31,11 +31,11 @@ def drawMatches(img1, kp1, img2, kp2, matches, mask):
     between matching keypoints. Inliers will be blue and outliers red.
 
     img1,img2 - Grayscale images
-    kp1,kp2 - Detected list of keypoints through any of the OpenCV keypoint 
+    kp1,kp2 - Detected list of keypoints through any of the OpenCV keypoint
               detection algorithms
     matches - A list of matches of corresponding keypoints through any
               OpenCV keypoint matching algorithm
-    mask    - Mask indicating each match's outlier status. 
+    mask    - Mask indicating each match's outlier status.
     """
 
     # Create a new output image that concatenates the two images together
@@ -72,7 +72,7 @@ def drawMatches(img1, kp1, img2, kp2, matches, mask):
         # radius 4
         # colour blue
         # thickness = 1
-        cv2.circle(out, (int(x1),int(y1)), 4, (255, 0, 0), 1)   
+        cv2.circle(out, (int(x1),int(y1)), 4, (255, 0, 0), 1)
         cv2.circle(out, (int(x2)+cols1,int(y2)), 4, (255, 0, 0), 1)
 
         # Draw a line in between the two points
@@ -98,7 +98,7 @@ def drawMatches(img1, kp1, img2, kp2, matches, mask):
 # Recursively make a descriptor tree. K = branching factor
 def make_tree(k):
 	"""
-	Constructs a tree for efficient retrieval approach by 
+	Constructs a tree for efficient retrieval approach by
 	Nister and Stewenius
 	"""
 
@@ -118,8 +118,8 @@ def make_tree(k):
 			img = cv2.imread('DVDcovers/' + i)
 			try:
 				gray= cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
-			except: 
-				print 'Failed to process file: ' + i
+			except:
+				print('Failed to process file: ' + i)
 			kp, descriptor = sift.detectAndCompute(gray,None)
 			# Add them to a list and dictionary
 			j = 0
@@ -154,8 +154,8 @@ def searchTree(name, tree):
 			img = cv2.imread('DVDcovers/' + i)
 			try:
 				gray= cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
-			except: 
-				print 'Failed to process file: ' + i
+			except:
+				print('Failed to process file: ' + i)
 			kp = sift.detect(gray,None)
 			# Add them to a list and dictionary
 			key_dict[i] = kp
@@ -164,7 +164,7 @@ def searchTree(name, tree):
 		targetImg = cv2.imread('test/' + name)
 		targetImg = cv2.cvtColor(targetImg, cv2.COLOR_BGR2GRAY)
 	except:
-		print 'Failed to open file at: test/' + name
+		print('Failed to open file at: test/' + name)
 
 	# Test image keypoints and descriptors
 	targetKp, targetDesc = sift.detectAndCompute(targetImg, None)
@@ -189,7 +189,7 @@ def searchTree(name, tree):
 	finalGood = None
 	finalMask = None
 	for fname, votes in finalAnswer.most_common(10):
-		print '%s: %i' % (fname, votes)
+		print('%s: %i' % (fname, votes))
 
 		FLANN_INDEX_KDTREE = 0
 		index_params = dict(algorithm = FLANN_INDEX_KDTREE, trees = 5)
@@ -207,7 +207,7 @@ def searchTree(name, tree):
 
 		src_pts = np.float32([ targetKp[m.queryIdx].pt for m in good ]).reshape(-1,1,2)
 		dst_pts = np.float32([ key_dict[fname][m.trainIdx].pt for m in good ]).reshape(-1,1,2)
-		
+
 		M, mask = cv2.findHomography(src_pts, dst_pts, cv2.RANSAC, 5.0)
 
 		inliers = 0
@@ -253,7 +253,7 @@ class _kTree:
 		self.k = k
 		self.descriptors = descriptors
 		self.data = []
-		# kTree children 
+		# kTree children
 		self.children = []
 		# Boolean to indicate if this is a leaf
 		self.end = False
